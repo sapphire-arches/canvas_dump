@@ -1,12 +1,11 @@
+from canvas_dump_utils import mk_and_cd
 import requests
 import json
 import urllib
 import logging
 import os
-import sys
 
 logging.basicConfig(level=logging.INFO)
-
 
 with open('token.txt') as inf:
     token = inf.read().strip()
@@ -16,21 +15,6 @@ headers = {
 }
 
 CANVAS = 'https://canvas.vt.edu/api/v1/'
-COURSE_FOLDERS_URL = CANVAS + 'courses/{course}/folders/root'
-
-def mkdir(p):
-    try:
-        os.mkdir(p)
-    except FileExistsError:
-        logging.debug('Path %s already exists' % p)
-    except PermissionError:
-        logging.debug('Permission not granted to create %s' % p)
-
-def mk_and_cd(p):
-    cwd = os.getcwd()
-    mkdir(p)
-    os.chdir(p)
-    return cwd
 
 def download_file(f):
     logging.info('Downloading file "{display_name}" ({filename})'.format(**f))
@@ -77,28 +61,3 @@ def read_folder(url_or_object):
             read_folder(folder)
 
     os.chdir(old_dir)
-
-def main():
-    courses = requests.get(CANVAS + 'users/self/courses', headers=headers, params={
-        'per_page': 200,
-    })
-    courses = courses.json()
-
-    mk_and_cd('output');
-
-    for course in courses:
-        logging.info('Processing class "{}"'.format(course['name']))
-
-        root = mk_and_cd(course['name'])
-
-        # Dump course metadata
-        with open('course_meta.json', 'w') as outf:
-            outf.write(json.dumps(course, indent=2))
-
-        # Dump all course files
-        read_folder(COURSE_FOLDERS_URL.format(course=course['id']))
-
-        os.chdir(root)
-
-if __name__ == '__main__':
-    main()
