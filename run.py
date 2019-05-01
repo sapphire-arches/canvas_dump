@@ -48,15 +48,16 @@ def read_folder(url_or_object):
     elif type(url_or_object) is str:
         root = requests.get(url_or_object, headers=headers)
         root = root.json()
+
+        if 'status' in root and root['status'] == 'unauthorized':
+            logging.warning('Failed to list folder {}'.format(root))
+            return
     else:
         assert "This is not OK"
     logging.debug(str(root))
     logging.info('Processing folder "{}"'.format(root['full_name']))
 
     old_dir = mk_and_cd(root['name'])
-
-    if 'status' in root and root['status'] == 'unauthorized':
-        logging.warning('Failed to list folder {}'.format(root))
 
     with open('folder_meta.json', 'w') as outf:
         outf.write(json.dumps(root, indent=2))
