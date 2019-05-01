@@ -87,7 +87,7 @@ def main():
     mk_and_cd('output');
 
     for course in courses:
-        logging.info(course['name'] + ' :')
+        logging.info('Processing class "{}"'.format(course['name']))
 
         root = mk_and_cd(course['name'])
 
