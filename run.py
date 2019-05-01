@@ -75,7 +75,6 @@ def read_folder(url_or_object):
         folders = folders.json()
         for folder in folders:
             read_folder(folder)
-        # logging.info('Sub-folders: %s' % folders)
 
     os.chdir(old_dir)
 
