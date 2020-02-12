@@ -10,11 +10,15 @@ logging.basicConfig(level=logging.INFO)
 with open('token.txt') as inf:
     token = inf.read().strip()
 
+with open('canvas_api_endpoint.txt') as inf:
+    CANVAS = inf.read().strip()
+
 headers = {
     'Authorization': 'Bearer ' + token
 }
 
-CANVAS = 'https://canvas.vt.edu/api/v1/'
+#CANVAS = 'https://canvas.vt.edu/api/v1/'
+
 
 def download_file(f):
     logging.info('Downloading file "{display_name}" ({filename})'.format(**f))
@@ -24,6 +28,7 @@ def download_file(f):
             outf.write(chunk)
     with open(f['display_name'] + '.meta.json', 'w') as outf:
         outf.write(json.dumps(f, indent=2))
+
 
 def read_folder(url_or_object):
     root = None
