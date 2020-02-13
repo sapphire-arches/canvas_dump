@@ -13,11 +13,11 @@ with open('token.txt') as inf:
 with open('canvas_api_endpoint.txt') as inf:
     CANVAS = inf.read().strip()
 
+#CANVAS = 'https://gatech.instructure.com/api/v1/'
+
 headers = {
     'Authorization': 'Bearer ' + token
 }
-
-#CANVAS = 'https://canvas.vt.edu/api/v1/'
 
 
 def download_file(f):
