@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.INFO)
 with open('token.txt') as inf:
     token = inf.read().strip()
 
-with open('canvas_api_endpoint.txt') as inf:
+with open('endpoint.txt') as inf:
     CANVAS = inf.read().strip()
 
 #CANVAS = 'https://gatech.instructure.com/api/v1/'
