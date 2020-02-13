@@ -13,8 +13,6 @@ with open('token.txt') as inf:
 with open('endpoint.txt') as inf:
     CANVAS = inf.read().strip()
 
-#CANVAS = 'https://gatech.instructure.com/api/v1/'
-
 headers = {
     'Authorization': 'Bearer ' + token
 }
