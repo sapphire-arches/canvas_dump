@@ -1,4 +1,4 @@
 token.txt
-canvas_api_endpoint.txt
+endpoint.txt
 *.pyc
 output/
